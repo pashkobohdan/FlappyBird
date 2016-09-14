@@ -11,7 +11,7 @@ public abstract class State {
 
     protected OrthographicCamera camera;
     protected Vector3 mouse;
-    protected GameStateManeger gsm;
+    static protected GameStateManeger gsm;
 
     public State(GameStateManeger gsm){
         this.gsm = gsm;
