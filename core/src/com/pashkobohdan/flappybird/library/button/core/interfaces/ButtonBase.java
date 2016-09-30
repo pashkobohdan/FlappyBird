@@ -17,5 +17,7 @@ public interface ButtonBase {
 
     void addClickListener(ClickListener oneClickListener);
 
+    void removeClickListener();
+
     void resetButtonEdges();
 }

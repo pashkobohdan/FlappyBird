@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pashkobohdan.flappybird.library.button.core.ButtonState;
 import com.pashkobohdan.flappybird.library.button.core.interfaces.ButtonBase;
 import com.pashkobohdan.flappybird.library.button.core.interfaces.ClickListener;
+import com.pashkobohdan.flappybird.library.textView.TextView;
 
 /**
  * Created by Bohdan Pashko on 14.09.16.
@@ -17,7 +18,7 @@ import com.pashkobohdan.flappybird.library.button.core.interfaces.ClickListener;
 public class Button implements ButtonBase {
 
     private OrthographicCamera orthographicCamera;
-    private String text;
+    //private String text;
     private Texture buttonOff;
     private Texture buttonOn;
     private int centerX;
@@ -25,8 +26,9 @@ public class Button implements ButtonBase {
     private int width;
     private int height;
 
-    private BitmapFont textFont;
-    private GlyphLayout textFontGlyphLayout = new GlyphLayout();
+    //private TextView textView;
+//    private BitmapFont textFont;
+//    private GlyphLayout textFontGlyphLayout = new GlyphLayout();
 
     private int leftX, rightX, upY, downY;
     private int clickX, clickY;
@@ -34,9 +36,11 @@ public class Button implements ButtonBase {
 
     private ButtonState currentState;
 
-    public Button(OrthographicCamera orthographicCamera, String text, Texture buttonOff, Texture buttonOn, int centerX, int centerY, int width, int height) {
+    public Button(OrthographicCamera orthographicCamera, Texture buttonOff, Texture buttonOn,
+                  int centerX, int centerY,
+                  int width, int height) {
         this.orthographicCamera = orthographicCamera;
-        this.text = text;
+        //this.textView = textView;
         this.buttonOff = buttonOff;
         this.buttonOn = buttonOn;
         this.centerX = centerX;
@@ -44,8 +48,25 @@ public class Button implements ButtonBase {
         this.width = width;
         this.height = height;
 
-        textFont = new BitmapFont();
-        textFontGlyphLayout.setText(textFont, text);
+//        textFont = new BitmapFont();
+//        textFontGlyphLayout.setText(textFont, text);
+
+        resetButtonEdges();
+    }
+
+    public Button(OrthographicCamera orthographicCamera, Texture buttonOff, Texture buttonOn,
+                  int centerX, int centerY) {
+        this.orthographicCamera = orthographicCamera;
+        //this.textView = textView;
+        this.buttonOff = buttonOff;
+        this.buttonOn = buttonOn;
+        this.centerX = centerX;
+        this.centerY = centerY;
+        this.width = buttonOff.getWidth();
+        this.height = buttonOff.getHeight();
+
+//        textFont = new BitmapFont();
+//        textFontGlyphLayout.setText(textFont, text);
 
         resetButtonEdges();
     }
@@ -63,7 +84,8 @@ public class Button implements ButtonBase {
             spriteBatch.draw(buttonOff, leftX, downY, width, height);
         }
 
-        textFont.draw(spriteBatch, text, centerX - textFontGlyphLayout.width / 2, centerY);
+        //textView.render(spriteBatch);
+        //textFont.draw(spriteBatch, text, centerX - textFontGlyphLayout.width / 2, centerY);
     }
 
     @Override
@@ -71,11 +93,11 @@ public class Button implements ButtonBase {
         if (getButtonOff() != null) {
             getButtonOff().dispose();
         }
-        if (getButtonOff() != null) {
+        if (getButtonOn() != null) {
             getButtonOn().dispose();
         }
 
-        getTextFont().dispose();
+        //getTextFont().dispose();
     }
 
     @Override
@@ -104,6 +126,11 @@ public class Button implements ButtonBase {
     @Override
     public void addClickListener(ClickListener clickListener) {
         this.clickListener = clickListener;
+    }
+
+    @Override
+    public void removeClickListener() {
+        this.clickListener = null;
     }
 
     @Override
@@ -142,13 +169,13 @@ public class Button implements ButtonBase {
         this.orthographicCamera = orthographicCamera;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
+//    public String getText() {
+//        return text;
+//    }
+//
+//    public void setText(String text) {
+//        this.text = text;
+//    }
 
     public Texture getButtonOff() {
         return buttonOff;
@@ -206,11 +233,11 @@ public class Button implements ButtonBase {
         resetButtonEdges();
     }
 
-    public BitmapFont getTextFont() {
-        return textFont;
-    }
-
-    public void setTextFont(BitmapFont textFont) {
-        this.textFont = textFont;
-    }
+//    public BitmapFont getTextFont() {
+//        return textFont;
+//    }
+//
+//    public void setTextFont(BitmapFont textFont) {
+//        this.textFont = textFont;
+//    }
 }

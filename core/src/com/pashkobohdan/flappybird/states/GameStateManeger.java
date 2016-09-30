@@ -15,18 +15,21 @@ public class GameStateManeger {
     }
 
     public void set(State state) {
-        currentState.dispose();
+        getCurrentState().dispose();
 
         push(state);
     }
 
     public void update(float dt) {
-        currentState.update(dt);
+        getCurrentState().update(dt);
     }
 
     public void render(SpriteBatch spriteBatch) {
-        currentState.render(spriteBatch);
+        getCurrentState().render(spriteBatch);
     }
 
 
+    public State getCurrentState() {
+        return currentState;
+    }
 }

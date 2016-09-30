@@ -16,8 +16,14 @@ android {
     }
     defaultConfig {
         applicationId "com.pashkobohdan.flappybird"
-        minSdkVersion 8
-        targetSdkVersion 24
+        minSdkVersion 15
+        targetSdkVersion 23
+
+        multiDexEnabled true
+    }
+
+    dependencies {
+        compile 'com.android.support:multidex:1.0.0'
     }
 }
 

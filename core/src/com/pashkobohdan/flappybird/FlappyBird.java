@@ -2,15 +2,17 @@ package com.pashkobohdan.flappybird;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.pashkobohdan.flappybird.googlePlayServices.PlayServices;
+import com.pashkobohdan.flappybird.sprites.AssetsLoader;
 import com.pashkobohdan.flappybird.states.GameStateManeger;
-import com.pashkobohdan.flappybird.states.MenuState;
+import com.pashkobohdan.flappybird.states.MainMenu;
 
 public class FlappyBird extends ApplicationAdapter {
-    public static final int WIDTH = 480;
-    public static final int HEIGHT = 800;
+    public static final int WIDTH = 288;
+    public static final int HEIGHT = 512;
 
     public static final String TITLE = "Flappy Bird";
 
@@ -18,7 +20,21 @@ public class FlappyBird extends ApplicationAdapter {
     private GameStateManeger gameStateManeger;
     private SpriteBatch batch;
 
-    private Music music;
+    public static PlayServices playServices;
+
+    public FlappyBird (PlayServices playServices){
+        this.playServices = playServices;
+
+        playServices.signIn();
+        //playServices.signOut();
+        if(!playServices.isSignedIn()){
+            playServices = null;
+        }
+    }
+
+    public FlappyBird(){
+
+    }
 
     @Override
     public void create() {
@@ -26,13 +42,20 @@ public class FlappyBird extends ApplicationAdapter {
 
         gameStateManeger = new GameStateManeger();
 
-        music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
-        music.setLooping(true);
-        music.setVolume(0.1f);
-        music.play();
+//        music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+//        music.setLooping(true);
+//        music.setVolume(0.1f);
+//        music.play();
 
-        Gdx.gl.glClearColor(1, 0, 0, 1);
-        gameStateManeger.push(new MenuState(gameStateManeger));
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+
+
+        OrthographicCamera firstCamera = new OrthographicCamera();
+        firstCamera.setToOrtho(false, FlappyBird.WIDTH/2, FlappyBird.HEIGHT/2);
+        AssetsLoader.load(firstCamera);
+
+        gameStateManeger.push(new MainMenu(gameStateManeger));
+
     }
 
     @Override
@@ -45,6 +68,6 @@ public class FlappyBird extends ApplicationAdapter {
 
     @Override
     public void dispose() {
-        music.dispose();
+        //music.dispose();
     }
 }
